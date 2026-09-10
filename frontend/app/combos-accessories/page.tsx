@@ -1,0 +1,1 @@
+import ProductListing from "@/components/product-listing"; export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|string[]|undefined>>}){return <ProductListing title="Combos & Accessories" description="Browse combo-ready products and accessories." searchParams={await searchParams}/>}

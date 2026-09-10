@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function StaticInfoPage({title,description,children}:{title:string;description:string;children:React.ReactNode}){return <main><section className="content-hero"><div className="page-container"><p>DRONE BANGLADESH</p><h1>{title}</h1><span>{description}</span></div></section><article className="page-container article-detail static-info-page">{children}<Link href="/contact" className="button button-primary">Contact support</Link></article></main>}

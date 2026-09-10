@@ -1,0 +1,122 @@
+DRONE BANGLADESH - FINAL COMPLETE SOURCE PACKAGE v5
+=====================================================
+
+Requirements
+------------
+1. Node.js 20 LTS or newer
+2. MongoDB Atlas database
+3. VS Code
+4. Internet connection for the first npm install
+
+BACKEND (Terminal 1)
+--------------------
+cd backend
+copy .env.example .env
+
+Open backend/.env and replace at minimum:
+- MONGODB_URI
+- JWT_ACCESS_SECRET
+- JWT_REFRESH_SECRET
+- ADMIN_PASSWORD
+- ADMIN_SEED_KEY
+- NOTIFICATION_EMAIL (default: dronebangladesh567@gmail.com)
+- EMAIL_API_KEY and EMAIL_FROM for stock-out/restock/pre-order emails
+
+Optional for cloud image hosting:
+- CLOUDINARY_CLOUD_NAME
+- CLOUDINARY_API_KEY
+- CLOUDINARY_API_SECRET
+
+Then run:
+npm install
+npm run seed
+npm run dev
+
+Backend API: http://localhost:5000/api/v1
+
+FRONTEND (Terminal 2)
+---------------------
+cd frontend
+copy .env.example .env.local
+npm install
+npm run dev
+
+Website: http://localhost:3000
+Admin:   http://localhost:3000/admin/login
+
+LOCAL FRONTEND CONFIG
+---------------------
+frontend/.env.local should contain:
+NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_WHATSAPP_NUMBER=8801317768213
+NEXT_PUBLIC_FACEBOOK_URL=https://web.facebook.com/dronebangladesh?
+NEXT_PUBLIC_YOUTUBE_URL=https://www.youtube.com/@dronebangladesh9726
+NEXT_PUBLIC_INSTAGRAM_URL=
+
+LOCAL BACKEND CONFIG
+--------------------
+backend/.env should contain at minimum:
+FRONTEND_URL=http://localhost:3000
+API_PUBLIC_URL=http://localhost:5000
+MONGODB_URI=YOUR_MONGODB_ATLAS_URI
+JWT_ACCESS_SECRET=YOUR_LONG_RANDOM_SECRET
+JWT_REFRESH_SECRET=YOUR_SECOND_LONG_RANDOM_SECRET
+ADMIN_EMAIL=YOUR_ADMIN_EMAIL
+ADMIN_PASSWORD=YOUR_ADMIN_PASSWORD
+ADMIN_SEED_KEY=YOUR_SEED_KEY
+ENABLE_DEMO_DATA=false
+
+IMPORTANT
+---------
+- Keep frontend on port 3000 and backend on port 5000 for this local setup.
+- Run `npm run seed` after configuring MongoDB.
+- Courier Delivery is the only checkout delivery method and the website delivery charge is ৳150.
+- Email verification is intentionally not included.
+- Stock-out products automatically show a Pre-Order action. The pre-order form
+  collects name, email, mobile, address and full/partial payment preference.
+- Admin > Pre-Orders manages advance bookings. When inventory returns above zero,
+  active booking customers receive a restock email.
+- Admin > Authenticity & Warranty manages serial records. Customers can verify
+  a serial at /authenticity-checker.
+- Rotate any MongoDB/JWT/Admin/Cloudinary credentials previously visible in screenshots before production deployment.
+- For live SEO, replace NEXT_PUBLIC_SITE_URL with the real HTTPS domain before `npm run build`, then submit /sitemap.xml to Google Search Console.
+
+LATEST v5 UPDATES
+-----------------
+- Admin Media/Cloudinary timeout is now fail-safe. Media listing falls back to local uploads instead of breaking Categories/Products with 499/500 errors.
+- Added `/api/v1/admin/media/folder-categories` for fast folder metadata without a Cloudinary network call.
+- Cloudinary upload failures automatically fall back to the backend local uploads folder.
+- Homepage multi-banner reference design is preserved but the hero is now more compact (about 395px desktop height).
+- Drones and Handhelds now use the same wide visual mega-menu design system as Enterprise & Agriculture.
+- Products Management now has Navigation Mega-Menu Placement fields for Drones, Handhelds and Enterprise & Agriculture.
+- Admin-created products can be assigned to a mega-menu group/column and order; storefront menus read these placements dynamically from backend product data.
+- Drones/Handhelds/Enterprise CMS menu tabs still support visual groups and lower promotional cards, so content and products can both be managed without code edits.
+
+USING MEGA-MENU PRODUCT PLACEMENT
+---------------------------------
+Admin > Products > Add/Edit Product > Navigation mega-menu placement
+- Drones: enter a Group / column such as `DJI Mini`
+- Handhelds: enter a Group / column such as `DJI Osmo Series`
+- Enterprise & Agriculture: enter a Group / column such as `AGRAS`
+- Set Menu order to control ordering.
+- Leave a group blank if the product should not appear in that menu.
+
+For large lower-row promotional cards use:
+Admin > Drones mega menu / Handhelds mega menu / Enterprise & Agriculture mega menu
+and choose Display type = Promo.
+
+FINAL SOURCE VERIFICATION
+-------------------------
+Backend regression/source tests: 15/15 PASSED
+Frontend regression/source tests: 20/20 PASSED
+TypeScript/TSX syntax/transpile scan: PASSED (194 files)
+Local import-resolution scan: PASSED (314 local imports, 0 missing)
+
+PRODUCTION BUILD
+----------------
+After npm install, run:
+  backend:  npm run build
+  frontend: npm run typecheck && npm run build
+
+See FINAL-VERIFICATION.txt for packaging details and the dependency-install limitation in this environment.

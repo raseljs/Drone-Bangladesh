@@ -1,0 +1,42 @@
+Drone Bangladesh - Final Verification
+Build: v6 Pre-Orders + Stock Alerts + Authenticity Checker
+Date: 2026-09-01
+
+Implemented in this build
+- Fixed Admin Media / Cloudinary timeout behavior that could surface as 499/500 during category/product workflows.
+- Added a fast admin media folder endpoint that does not call Cloudinary.
+- Added safe local-media fallback for Cloudinary listing/upload failures.
+- Reduced the homepage hero/banner height while preserving the supplied reference layout and interactions.
+- Reworked Drones and Handhelds desktop mega menus to use the same visual six-column + optional promo-card pattern as Enterprise & Agriculture.
+- Fixed incomplete/empty CMS menu responses by adding a reference-complete Enterprise & Agriculture fallback: six visual columns, child links, responsive layout and Software/Hardware/Services promo cards are now rendered immediately and merged with managed content.
+- Added product-level menu placements in MongoDB for Drones, Handhelds and Enterprise & Agriculture.
+- Added Admin Product fields for menu group and order assignment.
+- Storefront now merges Admin CMS menu content with published product menu placements from the backend.
+- Extended all three mega-menu CMS resources to support category/child-link entries and optional promo cards.
+- Added product-level preorder controls: enable/disable, partial deposit percentage and customer message.
+- Added customer Pre-Order form on stock-out product pages with name, email, Bangladesh mobile, full address and full/partial payment plan.
+- Added `/api/v1/preorders` and Admin > Pre-Orders review/status/payment controls.
+- Added stock-out email alert to `NOTIFICATION_EMAIL` (default `dronebangladesh567@gmail.com`) and restock email to active pre-order customers.
+- Added Resend-compatible email configuration (`EMAIL_API_URL`, `EMAIL_API_KEY`, `EMAIL_FROM`) plus optional Gmail/SMTP App Password delivery (`EMAIL_SMTP_*`) with safe logging fallback when no provider is configured.
+- Added public `/authenticity-checker`, `/api/v1/warranty/verify` and Admin > Authenticity & Warranty serial-record CRUD.
+- Added Next Suspense boundaries for query-param admin/customer surfaces so production prerendering completes cleanly.
+
+Verification performed
+- Backend source/regression tests: 17/17 passed.
+- Frontend source/regression tests: 21/21 passed.
+- Backend `npm run build`: passed.
+- Frontend `npm run typecheck` and `npm run build`: passed.
+- Relative/local import resolution: 314 checked, 0 missing.
+- Real .env/.env.local files are excluded.
+- node_modules, .next, dist and temporary build/cache files are excluded.
+
+Dependency-aware build note
+- Dependencies were installed in the build workspace with `npm install --ignore-scripts`; both production builds completed successfully.
+
+Recommended final local verification after extraction
+1. backend: copy .env.example .env, configure MongoDB/secrets, `npm install`, `npm run build`, `npm run seed`, `npm run dev`
+2. frontend: copy .env.example .env.local, `npm install`, `npm run typecheck`, `npm run build`, `npm run dev`
+3. Test Admin Categories image upload with Cloudinary enabled and with invalid/unavailable Cloudinary credentials to confirm local fallback.
+4. Create one product in each Navigation mega-menu placement and confirm Drones, Handhelds and Enterprise menus update without code changes.
+5. Set `EMAIL_API_KEY` on the server, create a stock-out product/order, submit a pre-order, then add stock from Admin > Inventory and confirm both admin and customer emails.
+6. Add a serial record in Admin > Authenticity & Warranty and verify it from `/authenticity-checker`.
